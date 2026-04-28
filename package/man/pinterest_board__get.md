@@ -5,10 +5,8 @@ The `get` command retrieves a single board by its ID.
 #### Usage
 
 ```bash
-aux4 pinterest board get <boardId> [--tokenFile <path>]
+aux4 pinterest board get <boardId>
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

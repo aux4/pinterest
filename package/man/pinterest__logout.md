@@ -5,10 +5,8 @@ The `logout` command removes the stored Pinterest OAuth token. This does not rev
 #### Usage
 
 ```bash
-aux4 pinterest logout [--tokenFile <path>]
+aux4 pinterest logout
 ```
-
---tokenFile   Custom token file path (default: .oauth/pinterest.json)
 
 #### Example
 

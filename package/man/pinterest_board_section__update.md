@@ -5,12 +5,11 @@ The `update` command updates an existing board section's title.
 #### Usage
 
 ```bash
-aux4 pinterest board section update --boardId <boardId> <sectionId> --body <json> [--tokenFile <path>]
+aux4 pinterest board section update --boardId <boardId> <sectionId> --body <json>
 ```
 
 --boardId     Board ID
 --body        Section fields to update as JSON (title)
---tokenFile   Custom token file path
 
 #### Example
 

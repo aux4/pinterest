@@ -5,10 +5,8 @@ The `delete` command permanently deletes a pin. You will be asked for confirmati
 #### Usage
 
 ```bash
-aux4 pinterest pin delete <pinId> [--tokenFile <path>]
+aux4 pinterest pin delete <pinId>
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

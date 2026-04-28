@@ -5,11 +5,10 @@ The `create` command creates a new section within a board.
 #### Usage
 
 ```bash
-aux4 pinterest board section create <boardId> --body <json> [--tokenFile <path>]
+aux4 pinterest board section create <boardId> --body <json>
 ```
 
 --body        Section data as JSON (title)
---tokenFile   Custom token file path
 
 #### Example
 

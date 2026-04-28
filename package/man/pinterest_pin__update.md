@@ -5,11 +5,10 @@ The `update` command updates an existing pin. Only the fields included in `--bod
 #### Usage
 
 ```bash
-aux4 pinterest pin update <pinId> --body <json> [--tokenFile <path>]
+aux4 pinterest pin update <pinId> --body <json>
 ```
 
 --body        Pin fields to update as JSON (title, description, link, alt_text)
---tokenFile   Custom token file path
 
 #### Example
 

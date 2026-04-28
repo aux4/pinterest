@@ -10,14 +10,14 @@ aux4 aux4 pkger install community/pinterest
 
 ## Prerequisites
 
-You need a Pinterest developer account and an API access token. Create one at [Pinterest Developers](https://developers.pinterest.com/).
+You need a Pinterest developer account and an OAuth2 access token. Create an app at [Pinterest Developers](https://developers.pinterest.com/), then generate an access token (it starts with `pina_`).
 
 ## Authentication
 
-Login with your Pinterest API token:
+Login with your Pinterest access token:
 
 ```bash
-aux4 pinterest login --token YOUR_ACCESS_TOKEN
+aux4 pinterest login --token pina_YOUR_ACCESS_TOKEN
 ```
 
 The token is saved to `.oauth/pinterest.json`. Add `.oauth/` to your `.gitignore`.
@@ -34,12 +34,33 @@ Logout:
 aux4 pinterest logout
 ```
 
+## Sandbox
+
+By default, commands use the production API (`https://api.pinterest.com`). To use the sandbox environment, either pass `--apiUrl` or set the `PINTEREST_API_URL` environment variable:
+
+```bash
+# Per command
+aux4 pinterest pin list --apiUrl https://api-sandbox.pinterest.com
+
+# Or set once for all commands
+export PINTEREST_API_URL=https://api-sandbox.pinterest.com
+aux4 pinterest pin list
+```
+
 ## Pins
 
 ### Create a pin
 
 ```bash
-aux4 pinterest pin create --body '{"title":"My Pin","description":"A great pin","board_id":"123456","media_source":{"source_type":"image_url","url":"https://example.com/image.jpg"}}'
+aux4 pinterest pin create --body '{
+  "title": "My Pin",
+  "description": "A great pin",
+  "board_id": "123456",
+  "media_source": {
+    "source_type": "image_url",
+    "url": "https://example.com/image.jpg"
+  }
+}'
 ```
 
 ### List pins
@@ -203,22 +224,8 @@ aux4 pinterest media list
 aux4 pinterest media get abc123
 ```
 
-## Token File
+## Environment Variables
 
-By default, credentials are stored in `.oauth/pinterest.json` in the current directory. You can override this with `--tokenFile`:
-
-```bash
-aux4 pinterest pin list --tokenFile /path/to/token.json
-```
-
-## Pagination
-
-List commands support pagination with `--pageSize` and `--bookmark`:
-
-```bash
-# First page
-aux4 pinterest pin list --pageSize 10
-
-# Next page (use bookmark from previous response)
-aux4 pinterest pin list --pageSize 10 --bookmark "Pz9..."
-```
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `PINTEREST_API_URL` | Pinterest API base URL | `https://api.pinterest.com` |

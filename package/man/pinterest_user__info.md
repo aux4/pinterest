@@ -5,10 +5,8 @@ The `info` command retrieves the authenticated user's Pinterest account informat
 #### Usage
 
 ```bash
-aux4 pinterest user info [--tokenFile <path>]
+aux4 pinterest user info
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

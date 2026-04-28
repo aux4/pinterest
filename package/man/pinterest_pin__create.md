@@ -5,11 +5,10 @@ The `create` command creates a new pin on Pinterest. The pin data must be provid
 #### Usage
 
 ```bash
-aux4 pinterest pin create --body <json> [--tokenFile <path>]
+aux4 pinterest pin create --body <json>
 ```
 
 --body        Pin data as JSON (title, description, board_id, media_source, link, alt_text)
---tokenFile   Custom token file path
 
 #### Example
 

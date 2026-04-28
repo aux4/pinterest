@@ -5,12 +5,11 @@ The `list` command retrieves the authenticated user's boards, including group bo
 #### Usage
 
 ```bash
-aux4 pinterest board list [--pageSize <n>] [--bookmark <token>] [--tokenFile <path>]
+aux4 pinterest board list [--pageSize <n>] [--apiUrl <url>]
 ```
 
---pageSize    Number of boards to return (default: 25, max: 100)
---bookmark    Pagination bookmark from previous response
---tokenFile   Custom token file path
+--pageSize   Number of boards to return (default: 25, max: 100)
+--apiUrl     Pinterest API base URL (default: https://api.pinterest.com)
 
 #### Example
 

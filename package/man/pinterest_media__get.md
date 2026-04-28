@@ -5,10 +5,8 @@ The `get` command retrieves the status of a specific media upload by its ID.
 #### Usage
 
 ```bash
-aux4 pinterest media get <mediaId> [--tokenFile <path>]
+aux4 pinterest media get <mediaId>
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

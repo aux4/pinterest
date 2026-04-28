@@ -5,11 +5,10 @@ The `delete` command permanently deletes a board section. Pins in the section ar
 #### Usage
 
 ```bash
-aux4 pinterest board section delete --boardId <boardId> <sectionId> [--tokenFile <path>]
+aux4 pinterest board section delete --boardId <boardId> <sectionId>
 ```
 
 --boardId     Board ID
---tokenFile   Custom token file path
 
 #### Example
 

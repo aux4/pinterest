@@ -5,13 +5,12 @@ The `analytics` command retrieves analytics for a specific pin over a date range
 #### Usage
 
 ```bash
-aux4 pinterest pin analytics <pinId> --startDate <YYYY-MM-DD> --endDate <YYYY-MM-DD> [--metricTypes <types>] [--tokenFile <path>]
+aux4 pinterest pin analytics <pinId> --startDate <YYYY-MM-DD> --endDate <YYYY-MM-DD> [--metricTypes <types>]
 ```
 
 --startDate     Start date in YYYY-MM-DD format
 --endDate       End date in YYYY-MM-DD format
 --metricTypes   Comma-separated metric types (default: IMPRESSION,PIN_CLICK,SAVE)
---tokenFile     Custom token file path
 
 #### Example
 

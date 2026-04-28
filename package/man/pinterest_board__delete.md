@@ -5,10 +5,8 @@ The `delete` command permanently deletes a board and all its pins. You will be a
 #### Usage
 
 ```bash
-aux4 pinterest board delete <boardId> [--tokenFile <path>]
+aux4 pinterest board delete <boardId>
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

@@ -5,10 +5,8 @@ The `status` command displays the current Pinterest authentication status, inclu
 #### Usage
 
 ```bash
-aux4 pinterest status [--tokenFile <path>]
+aux4 pinterest status
 ```
-
---tokenFile   Custom token file path (default: .oauth/pinterest.json)
 
 #### Example
 

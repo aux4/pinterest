@@ -5,11 +5,10 @@ The `save` command saves an existing pin to a board. You can optionally specify 
 #### Usage
 
 ```bash
-aux4 pinterest pin save <pinId> --body <json> [--tokenFile <path>]
+aux4 pinterest pin save <pinId> --body <json>
 ```
 
 --body        Save data as JSON (board_id, board_section_id)
---tokenFile   Custom token file path
 
 #### Example
 

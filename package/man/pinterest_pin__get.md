@@ -5,10 +5,8 @@ The `get` command retrieves a single pin by its ID.
 #### Usage
 
 ```bash
-aux4 pinterest pin get <pinId> [--tokenFile <path>]
+aux4 pinterest pin get <pinId>
 ```
-
---tokenFile   Custom token file path
 
 #### Example
 

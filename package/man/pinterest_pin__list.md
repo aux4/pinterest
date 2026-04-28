@@ -1,16 +1,15 @@
 #### Description
 
-The `list` command retrieves the authenticated user's pins. Results are paginated; use `--bookmark` with the value from the previous response to get the next page.
+The `list` command retrieves the authenticated user's pins.
 
 #### Usage
 
 ```bash
-aux4 pinterest pin list [--pageSize <n>] [--bookmark <token>] [--tokenFile <path>]
+aux4 pinterest pin list [--pageSize <n>] [--apiUrl <url>]
 ```
 
---pageSize    Number of pins to return (default: 25, max: 100)
---bookmark    Pagination bookmark from previous response
---tokenFile   Custom token file path
+--pageSize   Number of pins to return (default: 25, max: 100)
+--apiUrl     Pinterest API base URL (default: https://api.pinterest.com)
 
 #### Example
 

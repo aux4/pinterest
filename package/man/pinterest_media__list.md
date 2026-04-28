@@ -5,12 +5,10 @@ The `list` command retrieves all registered media uploads for the authenticated 
 #### Usage
 
 ```bash
-aux4 pinterest media list [--pageSize <n>] [--bookmark <token>] [--tokenFile <path>]
+aux4 pinterest media list [--pageSize <n>]
 ```
 
 --pageSize    Number of uploads to return (default: 25, max: 100)
---bookmark    Pagination bookmark from previous response
---tokenFile   Custom token file path
 
 #### Example
 

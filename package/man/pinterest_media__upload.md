@@ -5,11 +5,10 @@ The `upload` command registers a media upload with Pinterest. After registration
 #### Usage
 
 ```bash
-aux4 pinterest media upload --body <json> [--tokenFile <path>]
+aux4 pinterest media upload --body <json>
 ```
 
 --body        Media upload data as JSON (media_type: "video")
---tokenFile   Custom token file path
 
 #### Example
 
