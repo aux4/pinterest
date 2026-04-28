@@ -3,7 +3,7 @@
   "name": "pinterest",
   "version": "1.0.1",
   "description": "Pinterest API client for managing pins, boards, and media",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "tags": [
     "pinterest",
     "social",
