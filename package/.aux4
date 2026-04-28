@@ -35,35 +35,14 @@
         {
           "name": "login",
           "execute": [
-            "if(token!=) && aux4 curl oauth set-token pinterest --accessToken ${token} --tokenFile ${tokenFile} || aux4 curl oauth login pinterest --clientId ${clientId} --clientSecret ${clientSecret} --authUrl https://www.pinterest.com/oauth/ --tokenUrl https://api.pinterest.com/v5/oauth/token --scopes ${scopes} --callbackPort ${callbackPort} --tokenFile ${tokenFile}"
+            "aux4 curl oauth set-token pinterest --accessToken ${token} --tokenFile ${tokenFile}"
           ],
           "help": {
-            "text": "Authenticate with Pinterest",
+            "text": "Authenticate with Pinterest using your API token",
             "variables": [
               {
                 "name": "token",
-                "text": "API key or access token (skips OAuth flow)",
-                "default": ""
-              },
-              {
-                "name": "clientId",
-                "text": "Pinterest app client ID",
-                "default": ""
-              },
-              {
-                "name": "clientSecret",
-                "text": "Pinterest app client secret",
-                "default": ""
-              },
-              {
-                "name": "scopes",
-                "text": "Comma-separated OAuth scopes",
-                "default": "boards:read,boards:write,pins:read,pins:write,user_accounts:read"
-              },
-              {
-                "name": "callbackPort",
-                "text": "Local callback server port",
-                "default": "9876"
+                "text": "Pinterest API access token"
               },
               {
                 "name": "tokenFile",

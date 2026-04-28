@@ -1,6 +1,6 @@
 # community/pinterest
 
-Pinterest API client for managing pins, boards, and media. Built on `aux4/curl` with OAuth2 authentication.
+Pinterest API client for managing pins, boards, and media. Built on `aux4/curl`.
 
 ## Installation
 
@@ -10,17 +10,17 @@ aux4 aux4 pkger install community/pinterest
 
 ## Prerequisites
 
-You need a Pinterest developer account and an app with OAuth2 credentials. Create one at [Pinterest Developers](https://developers.pinterest.com/).
+You need a Pinterest developer account and an API access token. Create one at [Pinterest Developers](https://developers.pinterest.com/).
 
 ## Authentication
 
-Login with your Pinterest app credentials:
+Login with your Pinterest API token:
 
 ```bash
-aux4 pinterest login --clientId YOUR_CLIENT_ID --clientSecret YOUR_CLIENT_SECRET
+aux4 pinterest login --token YOUR_ACCESS_TOKEN
 ```
 
-This opens a browser for authorization. After approving, the token is saved to `.oauth/pinterest.json`. Add `.oauth/` to your `.gitignore`.
+The token is saved to `.oauth/pinterest.json`. Add `.oauth/` to your `.gitignore`.
 
 Check authentication status:
 
