@@ -1,0 +1,852 @@
+{
+  "scope": "community",
+  "name": "pinterest",
+  "version": "1.0.0",
+  "description": "Pinterest API client for managing pins, boards, and media",
+  "license": "MIT",
+  "tags": [
+    "pinterest",
+    "social",
+    "pins",
+    "boards",
+    "oauth"
+  ],
+  "dependencies": [
+    "aux4/curl"
+  ],
+  "profiles": [
+    {
+      "name": "main",
+      "commands": [
+        {
+          "name": "pinterest",
+          "execute": [
+            "profile:pinterest"
+          ],
+          "help": {
+            "text": "Pinterest API commands"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest",
+      "commands": [
+        {
+          "name": "login",
+          "execute": [
+            "aux4 curl oauth login pinterest --clientId ${clientId} --clientSecret ${clientSecret} --authUrl https://www.pinterest.com/oauth/ --tokenUrl https://api.pinterest.com/v5/oauth/token --scopes ${scopes} --callbackPort ${callbackPort} --tokenFile ${tokenFile}"
+          ],
+          "help": {
+            "text": "Authenticate with Pinterest",
+            "variables": [
+              {
+                "name": "clientId",
+                "text": "Pinterest app client ID"
+              },
+              {
+                "name": "clientSecret",
+                "text": "Pinterest app client secret"
+              },
+              {
+                "name": "scopes",
+                "text": "Comma-separated OAuth scopes",
+                "default": "boards:read,boards:write,pins:read,pins:write,user_accounts:read"
+              },
+              {
+                "name": "callbackPort",
+                "text": "Local callback server port",
+                "default": "9876"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "logout",
+          "execute": [
+            "aux4 curl oauth logout pinterest --tokenFile ${tokenFile}"
+          ],
+          "help": {
+            "text": "Remove stored Pinterest credentials",
+            "variables": [
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "status",
+          "execute": [
+            "aux4 curl oauth status pinterest --tokenFile ${tokenFile}"
+          ],
+          "help": {
+            "text": "Show Pinterest authentication status",
+            "variables": [
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "pin",
+          "execute": [
+            "profile:pinterest:pin"
+          ],
+          "help": {
+            "text": "Manage pins"
+          }
+        },
+        {
+          "name": "board",
+          "execute": [
+            "profile:pinterest:board"
+          ],
+          "help": {
+            "text": "Manage boards"
+          }
+        },
+        {
+          "name": "search",
+          "execute": [
+            "profile:pinterest:search"
+          ],
+          "help": {
+            "text": "Search pins and boards"
+          }
+        },
+        {
+          "name": "user",
+          "execute": [
+            "profile:pinterest:user"
+          ],
+          "help": {
+            "text": "User account information"
+          }
+        },
+        {
+          "name": "media",
+          "execute": [
+            "profile:pinterest:media"
+          ],
+          "help": {
+            "text": "Manage media uploads"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:pin",
+      "commands": [
+        {
+          "name": "create",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method POST --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/pins"
+          ],
+          "help": {
+            "text": "Create a new pin",
+            "variables": [
+              {
+                "name": "body",
+                "text": "Pin data as JSON (title, description, board_id, media_source, etc.)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "list",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/pins?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List user's pins",
+            "variables": [
+              {
+                "name": "pageSize",
+                "text": "Number of pins to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "get",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} https://api.pinterest.com/v5/pins/${pinId}"
+          ],
+          "help": {
+            "text": "Get a pin by ID",
+            "variables": [
+              {
+                "name": "pinId",
+                "text": "Pin ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "update",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method PATCH --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/pins/${pinId}"
+          ],
+          "help": {
+            "text": "Update an existing pin",
+            "variables": [
+              {
+                "name": "pinId",
+                "text": "Pin ID",
+                "arg": true
+              },
+              {
+                "name": "body",
+                "text": "Pin fields to update as JSON"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "delete",
+          "execute": [
+            "confirm:Are you sure you want to delete pin ${pinId}?",
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method DELETE https://api.pinterest.com/v5/pins/${pinId}"
+          ],
+          "help": {
+            "text": "Delete a pin",
+            "variables": [
+              {
+                "name": "pinId",
+                "text": "Pin ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "save",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method POST --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/pins/${pinId}/save"
+          ],
+          "help": {
+            "text": "Save a pin to a board",
+            "variables": [
+              {
+                "name": "pinId",
+                "text": "Pin ID",
+                "arg": true
+              },
+              {
+                "name": "body",
+                "text": "Save data as JSON (board_id, board_section_id)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "analytics",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/pins/${pinId}/analytics?start_date=${startDate}&end_date=${endDate}&metric_types=${metricTypes}\""
+          ],
+          "help": {
+            "text": "Get analytics for a pin",
+            "variables": [
+              {
+                "name": "pinId",
+                "text": "Pin ID",
+                "arg": true
+              },
+              {
+                "name": "startDate",
+                "text": "Start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "endDate",
+                "text": "End date (YYYY-MM-DD)"
+              },
+              {
+                "name": "metricTypes",
+                "text": "Comma-separated metric types",
+                "default": "IMPRESSION,PIN_CLICK,SAVE"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:board",
+      "commands": [
+        {
+          "name": "create",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method POST --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/boards"
+          ],
+          "help": {
+            "text": "Create a new board",
+            "variables": [
+              {
+                "name": "body",
+                "text": "Board data as JSON (name, description, privacy)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "list",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/boards?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List user's boards",
+            "variables": [
+              {
+                "name": "pageSize",
+                "text": "Number of boards to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "get",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} https://api.pinterest.com/v5/boards/${boardId}"
+          ],
+          "help": {
+            "text": "Get a board by ID",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "update",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method PATCH --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/boards/${boardId}"
+          ],
+          "help": {
+            "text": "Update an existing board",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "body",
+                "text": "Board fields to update as JSON"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "delete",
+          "execute": [
+            "confirm:Are you sure you want to delete board ${boardId}?",
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method DELETE https://api.pinterest.com/v5/boards/${boardId}"
+          ],
+          "help": {
+            "text": "Delete a board",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "pins",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/boards/${boardId}/pins?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List pins on a board",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "pageSize",
+                "text": "Number of pins to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "section",
+          "execute": [
+            "profile:pinterest:board:section"
+          ],
+          "help": {
+            "text": "Manage board sections"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:board:section",
+      "commands": [
+        {
+          "name": "create",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method POST --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/boards/${boardId}/sections"
+          ],
+          "help": {
+            "text": "Create a board section",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "body",
+                "text": "Section data as JSON (title)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "list",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/boards/${boardId}/sections?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List board sections",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID",
+                "arg": true
+              },
+              {
+                "name": "pageSize",
+                "text": "Number of sections to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "update",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method PATCH --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/boards/${boardId}/sections/${sectionId}"
+          ],
+          "help": {
+            "text": "Update a board section",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID"
+              },
+              {
+                "name": "sectionId",
+                "text": "Section ID",
+                "arg": true
+              },
+              {
+                "name": "body",
+                "text": "Section fields to update as JSON (title)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "delete",
+          "execute": [
+            "confirm:Are you sure you want to delete section ${sectionId}?",
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method DELETE https://api.pinterest.com/v5/boards/${boardId}/sections/${sectionId}"
+          ],
+          "help": {
+            "text": "Delete a board section",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID"
+              },
+              {
+                "name": "sectionId",
+                "text": "Section ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "pins",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/boards/${boardId}/sections/${sectionId}/pins?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List pins in a board section",
+            "variables": [
+              {
+                "name": "boardId",
+                "text": "Board ID"
+              },
+              {
+                "name": "sectionId",
+                "text": "Section ID",
+                "arg": true
+              },
+              {
+                "name": "pageSize",
+                "text": "Number of pins to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:search",
+      "commands": [
+        {
+          "name": "pins",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/search/pins?query=${query}&page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "Search user's pins",
+            "variables": [
+              {
+                "name": "query",
+                "text": "Search query",
+                "arg": true
+              },
+              {
+                "name": "pageSize",
+                "text": "Number of results to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "boards",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/search/boards?query=${query}&page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "Search user's boards",
+            "variables": [
+              {
+                "name": "query",
+                "text": "Search query",
+                "arg": true
+              },
+              {
+                "name": "pageSize",
+                "text": "Number of results to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:user",
+      "commands": [
+        {
+          "name": "info",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} https://api.pinterest.com/v5/user_account"
+          ],
+          "help": {
+            "text": "Get user account information",
+            "variables": [
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "analytics",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/user_account/analytics?start_date=${startDate}&end_date=${endDate}&metric_types=${metricTypes}\""
+          ],
+          "help": {
+            "text": "Get user account analytics",
+            "variables": [
+              {
+                "name": "startDate",
+                "text": "Start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "endDate",
+                "text": "End date (YYYY-MM-DD)"
+              },
+              {
+                "name": "metricTypes",
+                "text": "Comma-separated metric types",
+                "default": "IMPRESSION,PIN_CLICK,SAVE"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "followers",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/user_account/followers?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List followers",
+            "variables": [
+              {
+                "name": "pageSize",
+                "text": "Number of followers to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pinterest:media",
+      "commands": [
+        {
+          "name": "upload",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} --method POST --header \"Content-Type: application/json\" --body ${body} https://api.pinterest.com/v5/media"
+          ],
+          "help": {
+            "text": "Register a media upload",
+            "variables": [
+              {
+                "name": "body",
+                "text": "Media upload data as JSON (media_type)"
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "list",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} \"https://api.pinterest.com/v5/media?page_size=${pageSize}&bookmark=${bookmark}\""
+          ],
+          "help": {
+            "text": "List media uploads",
+            "variables": [
+              {
+                "name": "pageSize",
+                "text": "Number of uploads to return",
+                "default": "25"
+              },
+              {
+                "name": "bookmark",
+                "text": "Pagination bookmark from previous response",
+                "default": ""
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        },
+        {
+          "name": "get",
+          "execute": [
+            "aux4 curl auth-request --provider pinterest --tokenFile ${tokenFile} https://api.pinterest.com/v5/media/${mediaId}"
+          ],
+          "help": {
+            "text": "Get media upload status",
+            "variables": [
+              {
+                "name": "mediaId",
+                "text": "Media upload ID",
+                "arg": true
+              },
+              {
+                "name": "tokenFile",
+                "text": "Custom token file path",
+                "default": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
